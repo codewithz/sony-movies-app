@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { getMovies } from '../services/fakeMovieService'
 import Like from './common/Like';
+import Pagination from './common/Pagination';
 
 export default function MoviesComponent() {
 
     const [movies, setMovies] = useState(getMovies());
+    const [pageSize, setPageSize] = useState(4);
 
     const handleDelete = (movie) => {
         const filteredMovies = movies.
@@ -20,6 +22,10 @@ export default function MoviesComponent() {
         moviesClone[index] = { ...movies[index] }
         moviesClone[index].liked = !moviesClone[index].liked;
         setMovies(moviesClone);
+    }
+
+    const handlePageChange = () => {
+
     }
 
     if (count === 0) {
@@ -68,6 +74,10 @@ export default function MoviesComponent() {
 
                 </tbody>
             </table>
+            <Pagination
+                itemsCount={count}
+                pageSize={pageSize}
+                onPageChange={handlePageChange} />
         </div>
     )
 }
