@@ -10,41 +10,49 @@ export default function MoviesComponent() {
             filter((m) => movie._id !== m._id);
         setMovies(filteredMovies);
     }
+
+    const count = movies.length;
+
+    if (count === 0) {
+        return <p>There are no movies in the database</p>
+    }
     return (
+        <div>
+            <p>Showing {count} movies in database</p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Genre</th>
+                        <th>Stock</th>
+                        <th>Rate</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        movies.map(movie => (
+                            <tr>
+                                <td>{movie.title}</td>
+                                <td>{movie.genre.name}</td>
+                                <td>{movie.numberInStock}</td>
+                                <td>{movie.dailyRentalRate}</td>
+                                <td>
+                                    <button
+                                        className="btn btn-danger btn-sm m-2"
+                                        onClick={() => handleDelete(movie)}
+                                    >
+                                        Delete
+                                    </button>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Genre</th>
-                    <th>Stock</th>
-                    <th>Rate</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                {
-                    movies.map(movie => (
-                        <tr>
-                            <td>{movie.title}</td>
-                            <td>{movie.genre.name}</td>
-                            <td>{movie.numberInStock}</td>
-                            <td>{movie.dailyRentalRate}</td>
-                            <td>
-                                <button
-                                    className="btn btn-danger btn-sm m-2"
-                                    onClick={() => handleDelete(movie)}
-                                >
-                                    Delete
-                                </button>
-
-                            </td>
-                        </tr>
-                    ))
-                }
+                                </td>
+                            </tr>
+                        ))
+                    }
 
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     )
 }
