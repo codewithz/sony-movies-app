@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { getMovies } from '../services/fakeMovieService'
+import Like from './common/Like';
 
 export default function MoviesComponent() {
 
@@ -12,6 +13,14 @@ export default function MoviesComponent() {
     }
 
     const count = movies.length;
+
+    const handleLike = (movie) => {
+        const moviesClone = [...movies];
+        const index = moviesClone.indexOf(movie);
+        moviesClone[index] = { ...movies[index] }
+        moviesClone[index].liked = !moviesClone[index].liked;
+        setMovies(moviesClone);
+    }
 
     if (count === 0) {
         return <p>There are no movies in the database</p>
@@ -27,6 +36,7 @@ export default function MoviesComponent() {
                         <th>Stock</th>
                         <th>Rate</th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,6 +47,11 @@ export default function MoviesComponent() {
                                 <td>{movie.genre.name}</td>
                                 <td>{movie.numberInStock}</td>
                                 <td>{movie.dailyRentalRate}</td>
+                                <td>
+                                    <Like liked={movie.liked}
+                                        onClick={() => handleLike(movie)} />
+                                </td>
+
                                 <td>
                                     <button
                                         className="btn btn-danger btn-sm m-2"
