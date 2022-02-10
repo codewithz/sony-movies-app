@@ -1,11 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
+import MoviesHome from './components/MoviesHome';
+import isOffsetContainer from './../node_modules/popper.js/src/utils/isOffsetContainer';
 
 function App() {
   return (
-    <div>
-      <h3>Movies App</h3>
-    </div>
+    <main className="container">
+      <MoviesHome />
+    </main>
   );
 }
 
