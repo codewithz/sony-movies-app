@@ -11,7 +11,8 @@ export default function MoviesComponent() {
     const [movies, setMovies] = useState(getMovies());
     const [pageSize, setPageSize] = useState(4);
     const [currentPage, setCurrentPage] = useState(1);
-    const [genres, setGenres] = useState(getGenres())
+    const [genres, setGenres] = useState([{ _id: '', name: 'All Genres' }, ...getGenres()])
+    const [selectedGenre, setSelectedGenre] = useState(null)
 
     const handleDelete = (movie) => {
         const filteredMovies = movies.
@@ -34,22 +35,30 @@ export default function MoviesComponent() {
     }
 
     const handleGenreSelect = (genre) => {
-        console.log(genre)
+        setSelectedGenre(genre.name)
+        setCurrentPage(1)
     }
 
     if (count === 0) {
         return <p>There are no movies in the database</p>
     }
 
-    const paginatedMovies = paginate(movies, currentPage, pageSize)
+    const filteredMovies = selectedGenre && selectedGenre !== 'All Genres' ?
+        movies.filter(m => m.genre.name === selectedGenre) : movies;
+
+    const paginatedMovies = paginate(filteredMovies, currentPage, pageSize)
 
     return (
-        <div className="row">
+        <div className="row" style={{ marginTop: '20px' }}>
             <div className="col-2">
-                <ListGroup items={genres} onItemSelect={handleGenreSelect} />
+                <ListGroup
+                    items={genres}
+                    onItemSelect={handleGenreSelect}
+                    selectedItem={selectedGenre}
+                />
             </div>
             <div className="col">
-                <p>Showing {count} movies in database</p>
+                <p>Showing {filteredMovies.length} movies in database</p>
                 <table class="table">
                     <thead>
                         <tr>
@@ -91,7 +100,7 @@ export default function MoviesComponent() {
                     </tbody>
                 </table>
                 <Pagination
-                    itemsCount={count}
+                    itemsCount={filteredMovies.length}
                     pageSize={pageSize}
                     currentPage={currentPage}
                     onPageChange={handlePageChange} />
