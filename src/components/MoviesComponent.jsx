@@ -7,6 +7,7 @@ export default function MoviesComponent() {
 
     const [movies, setMovies] = useState(getMovies());
     const [pageSize, setPageSize] = useState(4);
+    const [currentPage, setCurrentPage] = useState(1);
 
     const handleDelete = (movie) => {
         const filteredMovies = movies.
@@ -24,8 +25,8 @@ export default function MoviesComponent() {
         setMovies(moviesClone);
     }
 
-    const handlePageChange = () => {
-
+    const handlePageChange = (page) => {
+        setCurrentPage(page)
     }
 
     if (count === 0) {
@@ -48,7 +49,7 @@ export default function MoviesComponent() {
                 <tbody>
                     {
                         movies.map(movie => (
-                            <tr>
+                            <tr key={movie._id}>
                                 <td>{movie.title}</td>
                                 <td>{movie.genre.name}</td>
                                 <td>{movie.numberInStock}</td>
@@ -77,6 +78,7 @@ export default function MoviesComponent() {
             <Pagination
                 itemsCount={count}
                 pageSize={pageSize}
+                currentPage={currentPage}
                 onPageChange={handlePageChange} />
         </div>
     )

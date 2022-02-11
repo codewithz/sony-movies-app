@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 export default function Pagination(props) {
 
-    const { itemsCount, pageSize } = props;
+    const { itemsCount, pageSize, onPageChange, currentPage } = props;
 
     const pageCount = Math.ceil(itemsCount / pageSize);
     console.log("PageCount: ", pageCount);
@@ -18,8 +18,11 @@ export default function Pagination(props) {
             <ul class="pagination">
                 {
                     pages.map((page) => (
-                        <li key={page} class="page-item">
-                            <a class="page-link">{page}</a>
+                        <li key={page}
+                            className={(currentPage === page) ? "page-item active" : "page-item"}>
+                            <a className="page-link" onClick={() => onPageChange(page)}>
+                                {page}
+                            </a>
                         </li>
                     ))
                 }
