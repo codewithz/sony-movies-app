@@ -1,13 +1,20 @@
 import logo from './logo.svg';
 import './App.css';
 import MoviesHome from './components/MoviesHome';
-import isOffsetContainer from './../node_modules/popper.js/src/utils/isOffsetContainer';
+import { BrowserRouter } from 'react-router-dom';
+import React, { Fragment } from 'react';
 
 function App() {
   return (
-    <main className="container">
-      <MoviesHome />
-    </main>
+    <React.Fragment>
+      <BrowserRouter>
+        <main className="container">
+
+          <MoviesHome />
+
+        </main>
+      </BrowserRouter >
+    </React.Fragment >
   );
 }
 
