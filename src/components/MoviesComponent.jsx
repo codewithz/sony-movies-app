@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { getMovies } from '../services/fakeMovieService'
 import Like from './common/Like';
 import Pagination from './common/Pagination';
+import { paginate } from './utils/paginate';
 
 export default function MoviesComponent() {
 
@@ -32,6 +33,9 @@ export default function MoviesComponent() {
     if (count === 0) {
         return <p>There are no movies in the database</p>
     }
+
+    const paginatedMovies = paginate(movies, currentPage, pageSize)
+
     return (
         <div>
             <p>Showing {count} movies in database</p>
@@ -48,7 +52,7 @@ export default function MoviesComponent() {
                 </thead>
                 <tbody>
                     {
-                        movies.map(movie => (
+                        paginatedMovies.map(movie => (
                             <tr key={movie._id}>
                                 <td>{movie.title}</td>
                                 <td>{movie.genre.name}</td>
