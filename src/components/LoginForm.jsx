@@ -16,7 +16,8 @@ export default function LoginForm() {
 
     const validate = () => {
 
-        const result = Joi.validate(account, schema, { abortEarly: false });
+        const options = { abortEarly: true }
+        const result = Joi.validate(account, schema, options);
         console.log("Result from Joi \n :", result);
 
         if (!result.error) return null;
@@ -35,7 +36,7 @@ export default function LoginForm() {
         event.preventDefault();
 
         const errors = validate();
-        setErrors(errors);
+        setErrors(errors || {});
         console.log(errors);
 
         if (errors) return;
@@ -46,16 +47,19 @@ export default function LoginForm() {
 
     const validateProperty = (input) => {
 
-        if (input.name === 'username') {
-            if (input.value.trim() === '') {
-                //..................
-                return 'Username is required'
-            }
+        const { name, value } = input;
+        const obj = { [name]: value };
+        const subSchema = {
+            [name]: schema[name]
         }
-        if (input.name === 'password') {
-            if (input.value.trim() === '') {
-                return 'Password is required'
-            }
+
+        const result = Joi.validate(obj, subSchema);
+
+        if (!result.error) {
+            return null;
+        }
+        else {
+            return result.error.details[0].message;
         }
 
     }
