@@ -1,16 +1,24 @@
 import React, { useState } from 'react'
 import Input from './common/Input';
+import Joi from 'joi-browser';
 
 export default function LoginForm() {
 
     const accountObject = { username: '', password: '' };
 
-
-
     const [account, setAccount] = useState(accountObject);
     const [errors, setErrors] = useState({});
 
+    const schema = {
+        username: Joi.string().required(),
+        password: Joi.string().required()
+    };
+
     const validate = () => {
+
+        const result = Joi.validate(account, schema, { abortEarly: false });
+        console.log("Result from Joi \n :", result);
+
 
         const errors = {}
 
@@ -41,6 +49,7 @@ export default function LoginForm() {
 
         if (input.name === 'username') {
             if (input.value.trim() === '') {
+                //..................
                 return 'Username is required'
             }
         }
@@ -59,6 +68,7 @@ export default function LoginForm() {
         const errorMessage = validateProperty(event.currentTarget);
         if (errorMessage) {
             errorsClone[name] = errorMessage;
+
         }
         else {
             delete errorsClone[name];
