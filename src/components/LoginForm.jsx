@@ -4,9 +4,7 @@ import Joi from 'joi-browser';
 
 export default function LoginForm() {
 
-    const accountObject = { username: '', password: '' };
-
-    const [account, setAccount] = useState(accountObject);
+    const [data, setData] = useState({ username: '', password: '' });
     const [errors, setErrors] = useState({});
 
     const schema = {
@@ -17,7 +15,7 @@ export default function LoginForm() {
     const validate = () => {
 
         const options = { abortEarly: true }
-        const result = Joi.validate(account, schema, options);
+        const result = Joi.validate(data, schema, options);
         console.log("Result from Joi \n :", result);
 
         if (!result.error) return null;
@@ -79,10 +77,10 @@ export default function LoginForm() {
         setErrors(errorsClone)
 
 
-        const accountClone = { ...account };
-        accountClone[name] = value;
+        const dataClone = { ...data };
+        dataClone[name] = value;
 
-        setAccount(accountClone);
+        setData(dataClone);
     }
 
     return (
@@ -91,14 +89,14 @@ export default function LoginForm() {
             <form onSubmit={handleSubmit}>
                 <Input
                     name="username"
-                    value={account.username}
+                    value={data.username}
                     onChange={handleChange}
                     label="Username"
                     error={errors.username}
                 />
                 <Input
                     name="password"
-                    value={account.password}
+                    value={data.password}
                     onChange={handleChange}
                     label="Password"
                     error={errors.password}
