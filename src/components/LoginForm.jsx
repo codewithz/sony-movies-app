@@ -103,7 +103,9 @@ export default function LoginForm() {
                     label="Password"
                     error={errors.password}
                 />
-                <button className="btn btn-warning btn-sm m-2">Login</button>
+                <button
+                    disabled={validate()}
+                    className="btn btn-warning btn-sm m-2">Login</button>
             </form>
 
         </div >
