@@ -8,8 +8,10 @@ import NotFound from './components/NotFound';
 import Navbar from './components/Navbar';
 import MovieForm from './components/MovieForm';
 import LoginForm from './components/LoginForm';
+import RegisterForm from './components/RegisterForm';
 
 import './App.css';
+
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
           <Switch>
             <Route path="/movies/:id" component={MovieForm} />
             <Route path="/login" component={LoginForm} />
+            <Route path="/register" component={RegisterForm} />
             <Route path="/movies" component={MoviesComponent} />
             <Route path="/customers" component={Customers} />
             <Route path="/rentals" component={Rentals} />

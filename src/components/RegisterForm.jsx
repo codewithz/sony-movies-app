@@ -2,14 +2,16 @@ import React, { useState } from 'react'
 import Input from './common/Input';
 import Joi from 'joi-browser';
 
-export default function LoginForm() {
 
-    const [data, setData] = useState({ username: '', password: '' });
+export default function RegisterForm() {
+
+    const [data, setData] = useState({ username: '', password: '', name: '' });
     const [errors, setErrors] = useState({});
 
     const schema = {
-        username: Joi.string().required().label('Username'),
-        password: Joi.string().required().label('Password')
+        username: Joi.string().required().email().label('Username'),
+        password: Joi.string().required().min(5).label('Password'),
+        name: Joi.string().required().label('Name')
     };
 
     const validate = () => {
@@ -44,7 +46,7 @@ export default function LoginForm() {
 
     const doSubmit = () => {
         //Call the server
-        console.log('Submitted');
+        console.log('Registration Success!!');
     }
 
     const validateProperty = (input) => {
@@ -89,7 +91,7 @@ export default function LoginForm() {
 
     return (
         <div>
-            <h1>Login</h1>
+            <h1>Register</h1>
             <form onSubmit={handleSubmit}>
                 <Input
                     name="username"
@@ -105,9 +107,16 @@ export default function LoginForm() {
                     label="Password"
                     error={errors.password}
                 />
+                <Input
+                    name="name"
+                    value={data.name}
+                    onChange={handleChange}
+                    label="Name"
+                    error={errors.name}
+                />
                 <button
                     disabled={validate()}
-                    className="btn btn-warning btn-sm m-2">Login</button>
+                    className="btn btn-primary btn-sm m-2">Register</button>
             </form>
 
         </div >
