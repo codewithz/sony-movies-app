@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Input from './common/Input';
 import Joi from 'joi-browser';
+import { getGenres } from '../services/fakeGenreService';
+import { getMovie } from '../services/fakeMovieService';
 
 export default function MovieForm(props) {
 
@@ -14,6 +16,31 @@ export default function MovieForm(props) {
     );
     const [genres, setGenres] = useState([]);
     const [errors, setErrors] = useState({});
+
+    useEffect(() => {
+        const genres = getGenres();
+        setGenres(genres);
+
+        const movieId = props.match.params.id;
+        if (movieId === 'new') return;
+
+        const movie = getMovie(movieId);
+
+        if (!movie) return props.history.replace("/not-found");
+
+        setData(mapToViewModel(movie));
+
+    })
+
+    const mapToViewModel = (movie) => {
+        return {
+            _id: movie._id,
+            title: movie.title,
+            genreId: movie.genre._id,
+            numberInStock: movie.numberInStock,
+            dailyRentalRate: movie.dailyRentalRate
+        }
+    }
 
     const schema = {
         _id: Joi.string(),
@@ -97,6 +124,7 @@ export default function MovieForm(props) {
 
         setData(dataClone);
     }
+
 
     return (
         <div>
