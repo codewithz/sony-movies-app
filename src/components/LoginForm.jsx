@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Input from './common/Input';
 
 export default function LoginForm() {
 
@@ -25,16 +26,12 @@ export default function LoginForm() {
         <div>
             <h1>Login</h1>
             <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="username">Username</label>
-                    <input id="username"
-                        type="text"
-                        className="form-control"
-                        value={account.username}
-                        onChange={handleChange}
-                        name="username"
-                    />
-                </div>
+                <Input
+                    name="username"
+                    value={account.username}
+                    onChange={handleChange}
+                    label="Username"
+                />
                 <div className="form-group">
                     <label htmlFor="password">Password</label>
                     <input id="password"
@@ -49,6 +46,6 @@ export default function LoginForm() {
                 <button className="btn btn-warning btn-sm m-2">Login</button>
             </form>
 
-        </div>
+        </div >
     )
 }
