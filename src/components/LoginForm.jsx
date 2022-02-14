@@ -21,7 +21,7 @@ export default function LoginForm() {
             errors.password = 'Password is required';
         }
 
-        return Object.keys(errors).length === 0 ? null : errors;
+        return Object.keys(errors).length === 0 ? {} : errors;
     }
 
     const handleSubmit = (event) => {
@@ -37,9 +37,35 @@ export default function LoginForm() {
         console.log('Submitted');
     }
 
+    const validateProperty = (input) => {
+
+        if (input.name === 'username') {
+            if (input.value.trim() === '') {
+                return 'Username is required'
+            }
+        }
+        if (input.name === 'password') {
+            if (input.value.trim() === '') {
+                return 'Password is required'
+            }
+        }
+
+    }
+
     const handleChange = (event) => {
-        // console.log("Handle Change", event)
         const { name, value } = event.currentTarget;
+
+        const errorsClone = { ...errors };
+        const errorMessage = validateProperty(event.currentTarget);
+        if (errorMessage) {
+            errorsClone[name] = errorMessage;
+        }
+        else {
+            delete errorsClone[name];
+        }
+        setErrors(errorsClone)
+
+
         const accountClone = { ...account };
         accountClone[name] = value;
 
@@ -55,12 +81,14 @@ export default function LoginForm() {
                     value={account.username}
                     onChange={handleChange}
                     label="Username"
+                    error={errors.username}
                 />
                 <Input
                     name="password"
                     value={account.password}
                     onChange={handleChange}
                     label="Password"
+                    error={errors.password}
                 />
                 <button className="btn btn-warning btn-sm m-2">Login</button>
             </form>
