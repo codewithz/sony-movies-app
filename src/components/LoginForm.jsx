@@ -14,8 +14,9 @@ export default function LoginForm() {
 
     const handleChange = (event) => {
         // console.log("Handle Change", event)
+        const { name, value } = event.currentTarget;
         const accountClone = { ...account };
-        accountClone.username = event.currentTarget.value;
+        accountClone[name] = value;
 
         setAccount(accountClone);
     }
@@ -31,6 +32,7 @@ export default function LoginForm() {
                         className="form-control"
                         value={account.username}
                         onChange={handleChange}
+                        name="username"
                     />
                 </div>
                 <div className="form-group">
@@ -39,6 +41,8 @@ export default function LoginForm() {
                         type="text"
                         value={account.password}
                         className="form-control"
+                        name="password"
+                        onChange={handleChange}
 
                     />
                 </div>
