@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import Input from './common/Input';
+import Select from './common/Select';
 import Joi from 'joi-browser';
 import { getGenres } from '../services/fakeGenreService';
-import { getMovie } from '../services/fakeMovieService';
+import { getMovie, saveMovie } from '../services/fakeMovieService';
 
 export default function MovieForm(props) {
 
@@ -30,7 +31,7 @@ export default function MovieForm(props) {
 
         setData(mapToViewModel(movie));
 
-    })
+    }, []);
 
     const mapToViewModel = (movie) => {
         return {
@@ -81,7 +82,7 @@ export default function MovieForm(props) {
     }
 
     const doSubmit = () => {
-
+        saveMovie(data);
         props.history.push("/movies");
     }
 
@@ -137,12 +138,13 @@ export default function MovieForm(props) {
                     label="Title"
                     error={errors.title}
                 />
-                <Input
+                <Select
                     name="genreId"
                     value={data.genreId}
                     onChange={handleChange}
                     label="Genre"
                     error={errors.genreId}
+                    options={genres}
                 />
                 <Input
                     name="numberInStock"
