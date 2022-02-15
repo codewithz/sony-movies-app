@@ -50,7 +50,8 @@ export default function LoginForm(props) {
             const { data: jwt } = await login(data.username, data.password);
             localStorage.setItem("token", jwt);
             toast.success("Login Success");
-            props.history.push("/");
+            // props.history.push("/");
+            window.location = "/";
         } catch (error) {
             if (error.response && error.response.status === 400) {
                 const errorsClone = { ...errors };

@@ -17,7 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 
-function App() {
+function App(props) {
 
   const [user, setUser] = useState({});
 
@@ -26,7 +26,9 @@ function App() {
     try {
       const jwt = localStorage.getItem("token");
       const user = jwtDecode(jwt);
+      console.log(user)
       setUser(user);
+
     }
     catch (error) {
 

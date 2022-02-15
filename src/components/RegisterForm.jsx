@@ -53,8 +53,8 @@ export default function RegisterForm(props) {
             localStorage.setItem("token", response.headers["x-auth-token"])
             toast.success('User registered successfully');
             clearUserState();
-            props.history.push("/");
-
+            // props.history.push("/");
+            window.location = "/";
         }
         catch (error) {
             if (error.response && error.response.status === 400) {
