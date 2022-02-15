@@ -55,6 +55,12 @@ export default function RegisterForm() {
 
         }
         catch (error) {
+            if (error.response && error.response.status === 400) {
+                const errorsClone = { ...errors };
+                errorsClone.username = error.response.data;
+                setErrors(errorsClone);
+
+            }
 
         }
     }
