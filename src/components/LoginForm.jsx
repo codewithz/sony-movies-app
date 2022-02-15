@@ -4,7 +4,7 @@ import Input from './common/Input';
 import Joi from 'joi-browser';
 import { login } from '../services/authService';
 
-export default function LoginForm() {
+export default function LoginForm(props) {
 
     const [data, setData] = useState({ username: '', password: '' });
     const [errors, setErrors] = useState({});
@@ -50,6 +50,7 @@ export default function LoginForm() {
             const { data: jwt } = await login(data.username, data.password);
             localStorage.setItem("token", jwt);
             toast.success("Login Success");
+            props.history.push("/");
         } catch (error) {
             if (error.response && error.response.status === 400) {
                 const errorsClone = { ...errors };
