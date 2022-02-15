@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { toast } from 'react-toastify';
 import Input from './common/Input';
 import Select from './common/Select';
 import Joi from 'joi-browser';
@@ -105,8 +106,16 @@ export default function MovieForm(props) {
     }
 
     const doSubmit = async () => {
-        await saveMovie(data);
-        props.history.push("/movies");
+        try {
+            await saveMovie(data);
+            toast.success("Movie stored/updated succesfully")
+            props.history.push("/movies");
+        }
+        catch (error) {
+            if (error.response && error.response.status === 400) {
+                toast.error("You must login to make changes!!")
+            }
+        }
     }
 
     const validateProperty = (input) => {
