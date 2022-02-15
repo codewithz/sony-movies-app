@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import { toast } from 'react-toastify';
 import Input from './common/Input';
 import Joi from 'joi-browser';
+import { login } from '../services/authService';
 
 export default function LoginForm() {
 
@@ -42,9 +44,14 @@ export default function LoginForm() {
         doSubmit();
     }
 
-    const doSubmit = () => {
+    const doSubmit = async () => {
         //Call the server
-        console.log('Submitted');
+        try {
+            await login(data.username, data.password);
+            toast.success("Login Success");
+        } catch (error) {
+
+        }
     }
 
     const validateProperty = (input) => {
