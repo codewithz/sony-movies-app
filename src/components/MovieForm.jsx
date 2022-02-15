@@ -44,11 +44,7 @@ export default function MovieForm(props) {
             if (error.response && error.response.status === 404) {
                 props.history.replace("/not-found");
             }
-
         }
-
-
-
     }
 
     useEffect(() => {
@@ -108,8 +104,8 @@ export default function MovieForm(props) {
         doSubmit();
     }
 
-    const doSubmit = () => {
-        saveMovie(data);
+    const doSubmit = async () => {
+        await saveMovie(data);
         props.history.push("/movies");
     }
 
@@ -190,6 +186,7 @@ export default function MovieForm(props) {
 
                 <button
                     disabled={validate()}
+
                     className="btn btn-warning btn-sm m-2">Save</button>
             </form>
 
