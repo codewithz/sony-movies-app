@@ -11,9 +11,11 @@ import Navbar from './components/Navbar';
 import MovieForm from './components/MovieForm';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
+import Logout from './components/Logout';
 
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
+
 
 
 
@@ -31,7 +33,7 @@ function App(props) {
 
     }
     catch (error) {
-
+      setUser(null);
     }
   }, [])
 
@@ -45,6 +47,7 @@ function App(props) {
           <Switch>
             <Route path="/movies/:id" component={MovieForm} />
             <Route path="/login" component={LoginForm} />
+            <Route path="/logout" component={Logout} />
             <Route path="/register" component={RegisterForm} />
             <Route path="/movies" component={MoviesComponent} />
             <Route path="/customers" component={Customers} />
