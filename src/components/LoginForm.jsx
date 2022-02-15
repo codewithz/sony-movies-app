@@ -50,7 +50,12 @@ export default function LoginForm() {
             await login(data.username, data.password);
             toast.success("Login Success");
         } catch (error) {
+            if (error.response && error.response.status === 400) {
+                const errorsClone = { ...errors };
+                errorsClone.username = error.response.data;
+                setErrors(errorsClone);
 
+            }
         }
     }
 
