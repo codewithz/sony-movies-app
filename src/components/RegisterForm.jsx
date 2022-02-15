@@ -49,7 +49,8 @@ export default function RegisterForm() {
     const doSubmit = async () => {
         //Call the server
         try {
-            await userService.register(data);
+            const response = await userService.register(data);
+            localStorage.setItem("token", response.headers["x-auth-token"])
             toast.success('User registered successfully');
             clearUserState();
 
