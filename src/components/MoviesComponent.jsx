@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
-import { getMovies } from '../services/fakeMovieService'
+import React, { useState, useEffect } from 'react'
 import Pagination from './common/Pagination';
 import { paginate } from './utils/paginate';
 import ListGroup from './common/ListGroup';
-import { getGenres } from '../services/fakeGenreService';
+// import { getGenres } from '../services/fakeGenreService';
+import { getGenres } from '../services/genreService';
+import { getMovies } from '../services/fakeMovieService'
 import MoviesTable from './MoviesTable';
 import { Link } from 'react-router-dom';
 
@@ -12,8 +13,21 @@ export default function MoviesComponent() {
     const [movies, setMovies] = useState(getMovies());
     const [pageSize, setPageSize] = useState(4);
     const [currentPage, setCurrentPage] = useState(1);
-    const [genres, setGenres] = useState([{ _id: '', name: 'All Genres' }, ...getGenres()])
+    const [genres, setGenres] = useState([])
     const [selectedGenre, setSelectedGenre] = useState(null)
+
+    useEffect(() => {
+        loadGenres();
+    }, [])
+
+    const loadGenres = async () => {
+        const promise = getGenres();
+        const result = await promise;
+        console.log(result)
+
+        setGenres([{ _id: '', name: 'All Genres' }, ...result.data]);
+
+    }
 
     const handleDelete = (movie) => {
         const filteredMovies = movies.
