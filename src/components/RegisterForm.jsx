@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import Input from './common/Input';
 import Joi from 'joi-browser';
+import { toast } from 'react-toastify';
+import * as userService from '../services/userService';
 
 
 export default function RegisterForm() {
@@ -44,9 +46,21 @@ export default function RegisterForm() {
         doSubmit();
     }
 
-    const doSubmit = () => {
+    const doSubmit = async () => {
         //Call the server
-        console.log('Registration Success!!');
+        try {
+            await userService.register(data);
+            toast.success('User registered successfully');
+            clearUserState();
+
+        }
+        catch (error) {
+
+        }
+    }
+
+    const clearUserState = () => {
+        setData({ username: '', password: '', name: '' });
     }
 
     const validateProperty = (input) => {
