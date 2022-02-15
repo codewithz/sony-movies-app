@@ -15,6 +15,16 @@ export function getMovies() {
 
 }
 
+export function getMovie(movieId) {
+
+    const url = urlBuilder(movieId);
+    return http.get(url);
+}
+
+export function saveMovie(movie) {
+
+}
+
 export function deleteMovie(movieId) {
     const url = urlBuilder(movieId);
     return http.delete(url);

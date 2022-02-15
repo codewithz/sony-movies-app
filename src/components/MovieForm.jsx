@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react'
 import Input from './common/Input';
 import Select from './common/Select';
 import Joi from 'joi-browser';
-import { getGenres } from '../services/fakeGenreService';
-import { getMovie, saveMovie } from '../services/fakeMovieService';
+// import { getGenres } from '../services/fakeGenreService';
+import { getGenres } from '../services/genreService';
+//import { getMovie, saveMovie } from '../services/fakeMovieService';
+import { getMovie, saveMovie } from '../services/movieService';
+
 
 export default function MovieForm(props) {
 
@@ -18,18 +21,42 @@ export default function MovieForm(props) {
     const [genres, setGenres] = useState([]);
     const [errors, setErrors] = useState({});
 
-    useEffect(() => {
-        const genres = getGenres();
-        setGenres(genres);
+    const populateGenres = async () => {
 
+        // const promise = getGenres();
+        // const result = await promise;
+        // const { data: genres } = result;
+
+        const { data: genres } = await getGenres();
+        setGenres(genres);
+    }
+
+    const populateMovie = async () => {
         const movieId = props.match.params.id;
         if (movieId === 'new') return;
 
-        const movie = getMovie(movieId);
+        try {
 
-        if (!movie) return props.history.replace("/not-found");
+            const { data: movie } = await getMovie(movieId);
+            setData(mapToViewModel(movie));
+        }
+        catch (error) {
+            if (error.response && error.response.status === 404) {
+                props.history.replace("/not-found");
+            }
 
-        setData(mapToViewModel(movie));
+        }
+
+
+
+    }
+
+    useEffect(() => {
+
+        populateGenres();
+        populateMovie();
+
+
 
     }, []);
 
