@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import MoviesComponent from './components/MoviesComponent';
 import Customers from './components/Customers';
@@ -11,6 +12,7 @@ import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 
 import './App.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
@@ -19,6 +21,7 @@ function App() {
       <BrowserRouter>
 
         <main className="container">
+          <ToastContainer />
           <Navbar />
           <Switch>
             <Route path="/movies/:id" component={MovieForm} />
