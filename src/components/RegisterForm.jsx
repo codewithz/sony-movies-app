@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import * as userService from '../services/userService';
 
 
-export default function RegisterForm() {
+export default function RegisterForm(props) {
 
     const [data, setData] = useState({ username: '', password: '', name: '' });
     const [errors, setErrors] = useState({});
@@ -53,6 +53,7 @@ export default function RegisterForm() {
             localStorage.setItem("token", response.headers["x-auth-token"])
             toast.success('User registered successfully');
             clearUserState();
+            props.history.push("/");
 
         }
         catch (error) {

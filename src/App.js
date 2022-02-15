@@ -1,6 +1,7 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import jwtDecode from 'jwt-decode';
 
 import MoviesComponent from './components/MoviesComponent';
 import Customers from './components/Customers';
@@ -15,14 +16,30 @@ import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 
+
 function App() {
+
+  const [user, setUser] = useState({});
+
+
+  useEffect(() => {
+    try {
+      const jwt = localStorage.getItem("token");
+      const user = jwtDecode(jwt);
+      setUser(user);
+    }
+    catch (error) {
+
+    }
+  }, [])
+
   return (
     <React.Fragment>
       <BrowserRouter>
 
         <main className="container">
           <ToastContainer />
-          <Navbar />
+          <Navbar user={user} />
           <Switch>
             <Route path="/movies/:id" component={MovieForm} />
             <Route path="/login" component={LoginForm} />

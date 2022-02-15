@@ -18,7 +18,7 @@ export default function LoginForm(props) {
 
         const options = { abortEarly: true }
         const result = Joi.validate(data, schema, options);
-        console.log("Result from Joi \n :", result);
+        //  console.log("Result from Joi \n :", result);
 
         if (!result.error) return null;
 
