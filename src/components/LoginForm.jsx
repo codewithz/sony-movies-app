@@ -47,7 +47,8 @@ export default function LoginForm() {
     const doSubmit = async () => {
         //Call the server
         try {
-            await login(data.username, data.password);
+            const { data: jwt } = await login(data.username, data.password);
+            localStorage.setItem("token", jwt);
             toast.success("Login Success");
         } catch (error) {
             if (error.response && error.response.status === 400) {
